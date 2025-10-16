@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300&display=swap" rel="stylesheet">
+    <style>
+        /* ===== EASY CUSTOMIZATION SECTION ===== */
+        :root {
+            /* Colors */
+            --bg-color: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.5);
+            --button-primary-bg: #ffffff;
+            --button-primary-text: #0f0f0f;
+            --button-secondary-bg: #2a2a2a;
+            --button-secondary-text: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.06);
+            
+            /* Spacing */
+            --card-padding-desktop: 80px 100px;
+            --card-padding-tablet: 60px 70px;
+            --card-padding-mobile: 40px 30px;
+            --button-gap: 20px;
+            
+            /* Typography */
+            --time-size-desktop: 6rem;
+            --time-size-tablet: 4.5rem;
+            --time-size-mobile: 3rem;
+            --ms-size-desktop: 3rem;
+            --ms-size-tablet: 2.25rem;
+            --ms-size-mobile: 1.5rem;
+            --time-letter-spacing: 4px;
+            
+            /* Border Radius */
+            --card-radius: 24px;
+            --button-radius: 14px;
+        }
+        
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            padding: var(--card-padding-desktop);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.3),
+                0 8px 16px rgba(0, 0, 0, 0.25),
+                0 16px 32px rgba(0, 0, 0, 0.2),
+                0 32px 64px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+            max-width: 90vw;
+        }
+
+        /* ===== TIME DISPLAY ===== */
+        .time-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: var(--time-size-desktop);
+            font-weight: 200;
+            color: var(--text-color);
+            text-align: center;
+            letter-spacing: var(--time-letter-spacing);
+            line-height: 1;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .time-display #time {
+            font-variant-numeric: tabular-nums;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.35) 0%,
+                rgba(255, 255, 255, 0.4) 30%,
+                rgba(255, 255, 255, 0.55) 50%,
+                rgba(255, 255, 255, 0.4) 70%,
+                rgba(255, 255, 255, 0.35) 100%
+            );
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 12s ease-in-out infinite;
+            animation-play-state: paused;
+        }
+
+        .time-display #time.running {
+            animation-play-state: running;
+        }
+
+        @keyframes shine {
+            0%, 100% {
+                background-position: 200% center;
+            }
+            50% {
+                background-position: -200% center;
+            }
+        }
+
+        .milliseconds {
+            font-size: var(--ms-size-desktop);
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 200;
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+            margin-left: 8px;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            gap: var(--button-gap);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font-family: 'Inter', sans-serif;
+            padding: 20px 48px;
+            font-size: 1rem;
+            font-weight: 400;
+            border: none;
+            border-radius: var(--button-radius);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                0 4px 8px rgba(0, 0, 0, 0.15),
+                0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.25),
+                0 8px 16px rgba(0, 0, 0, 0.2),
+                0 16px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--button-secondary-bg);
+            color: var(--button-secondary-text);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: #333333;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.35),
+                0 8px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        
+        /* Tablet */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--card-padding-tablet);
+                gap: 50px;
+            }
+            
+            .time-display {
+                font-size: var(--time-size-tablet);
+            }
+            
+            .milliseconds {
+                font-size: var(--ms-size-tablet);
+            }
+            
+            button {
+                padding: 18px 40px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Mobile */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: var(--card-padding-mobile);
+                gap: 40px;
+                border-radius: 20px;
+            }
+            
+            .time-display {
+                font-size: var(--time-size-mobile);
+                letter-spacing: 2px;
+            }
+            
+            .milliseconds {
+                font-size: var(--ms-size-mobile);
+                margin-left: 4px;
+            }
+            
+            button {
+                padding: 16px 32px;
+                font-size: 0.9rem;
+            }
+            
+            .controls {
+                gap: 12px;
+            }
+        }
+        
+        /* Extra small screens */
+        @media (max-width: 360px) {
+            .time-display {
+                font-size: 2.5rem;
+            }
+            
+            .milliseconds {
+                font-size: 1.25rem;
+            }
+            
+            button {
+                padding: 14px 28px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="time-display">
+            <span id="time">00:00:00</span><span class="milliseconds" id="ms">.00</span>
+        </div>
+
+        <div class="controls">
+            <button id="startBtn" class="btn-primary" onclick="toggle()">Start</button>
+            <button class="btn-secondary" onclick="reset()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== STATE VARIABLES (Easy to understand) =====
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval = null;
+        let isRunning = false;
+
+        // ===== DOM ELEMENTS =====
+        const timeElement = document.getElementById('time');
+        const msElement = document.getElementById('ms');
+        const startButton = document.getElementById('startBtn');
+
+        // ===== FORMAT TIME FUNCTION =====
+        function formatTime(milliseconds) {
+            const totalSeconds = Math.floor(milliseconds / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const centiseconds = Math.floor((milliseconds % 1000) / 10);
+
+            return {
+                time: `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`,
+                ms: `.${String(centiseconds).padStart(2, '0')}`
+            };
+        }
+
+        // ===== UPDATE DISPLAY =====
+        function updateDisplay() {
+            elapsedTime = Date.now() - startTime;
+            const formatted = formatTime(elapsedTime);
+            timeElement.textContent = formatted.time;
+            msElement.textContent = formatted.ms;
+        }
+
+        // ===== START/STOP TOGGLE =====
+        function toggle() {
+            if (!isRunning) {
+                // Start the stopwatch
+                startTime = Date.now() - elapsedTime;
+                timerInterval = setInterval(updateDisplay, 10);
+                isRunning = true;
+                startButton.textContent = 'Stop';
+                startButton.classList.remove('btn-primary');
+                startButton.classList.add('btn-secondary');
+                timeElement.classList.add('running');
+            } else {
+                // Stop the stopwatch
+                clearInterval(timerInterval);
+                isRunning = false;
+                startButton.textContent = 'Resume';
+                startButton.classList.remove('btn-secondary');
+                startButton.classList.add('btn-primary');
+                timeElement.classList.remove('running');
+            }
+        }
+
+        // ===== RESET FUNCTION =====
+        function reset() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            elapsedTime = 0;
+            timeElement.textContent = '00:00:00';
+            msElement.textContent = '.00';
+            startButton.textContent = 'Start';
+            startButton.classList.remove('btn-secondary');
+            startButton.classList.add('btn-primary');
+            timeElement.classList.remove('running');
+        }
+    </script>
+</body>
+</html>
