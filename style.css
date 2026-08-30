@@ -1,0 +1,283 @@
+:root {
+  --pixel: 4px;
+  --pixel-gap: 1px;
+  --letter-gap: 3px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #000;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 40px 56px 40px 40px;
+  background: #000;
+  color: #fff;
+  font-family: "Google Sans Flex", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 125ms ease-out,
+    visibility 0s linear 125ms;
+}
+
+body.ready {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 125ms ease-out,
+    visibility 0s linear 0s;
+}
+
+.page {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.pfp {
+  width: 180px;
+  height: 180px;
+  flex: 0 0 180px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.pfp img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.identity {
+  min-width: 0;
+}
+
+.pixel-name {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.letter {
+  display: grid;
+  grid-template-columns: repeat(5, var(--pixel));
+  grid-template-rows: repeat(7, var(--pixel));
+  gap: var(--pixel-gap);
+  width: calc(var(--pixel) * 5 + var(--pixel-gap) * 4);
+  height: calc(var(--pixel) * 7 + var(--pixel-gap) * 6);
+  flex: 0 0 auto;
+  margin-right: var(--letter-gap);
+}
+
+.pixel {
+  width: var(--pixel);
+  height: var(--pixel);
+  background: #fff;
+  outline: 0.5px solid #000;
+}
+
+/* Temporary broken-bulb effect during the initial entrance */
+.letter.flicker .pixel {
+  transition: opacity 20ms linear;
+}
+
+.subtitle {
+  margin-top: 10px;
+  color: #777;
+  font-size: 17px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.mail {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid #1a1a1a;
+  color: #555;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-style: normal;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.mail a {
+  color: #fff;
+  font-size: 17px;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-left: 8px;
+  text-decoration: none;
+}
+
+.flicker-pixel {
+  opacity: 0;
+  background: #fff;
+}
+
+@media (max-width: 900px) {
+  body {
+    padding: 32px 40px 32px 28px;
+  }
+
+  :root {
+    --pixel: 3px;
+    --letter-gap: 2px;
+  }
+
+  .profile {
+    gap: 20px;
+  }
+
+  .pfp {
+    width: 140px;
+    height: 140px;
+    flex-basis: 140px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .mail {
+    margin-top: 36px;
+    font-size: 13px;
+  }
+
+  .mail a {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 28px 24px;
+  }
+
+  :root {
+    --pixel: 2.5px;
+    --letter-gap: 1px;
+  }
+
+  .profile {
+    gap: 14px;
+  }
+
+  .pfp {
+    width: 100px;
+    height: 100px;
+    flex-basis: 100px;
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  .mail {
+    margin-top: 30px;
+    padding-top: 13px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    white-space: normal;
+    line-height: 1.6;
+  }
+
+  .mail a {
+    display: inline;
+    margin-left: 5px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 24px 18px;
+  }
+
+  :root {
+    --pixel: 2px;
+    --pixel-gap: 0.5px;
+    --letter-gap: 1px;
+  }
+
+  .profile {
+    gap: 11px;
+  }
+
+  .pfp {
+    width: 78px;
+    height: 78px;
+    flex-basis: 78px;
+  }
+
+  .subtitle {
+    margin-top: 7px;
+    font-size: 13px;
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .mail {
+    margin-top: 26px;
+    padding-top: 12px;
+    font-size: 11px;
+  }
+
+  .mail a {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --pixel: 1.7px;
+    --pixel-gap: 0.4px;
+    --letter-gap: 0.7px;
+  }
+
+  .profile {
+    gap: 9px;
+  }
+
+  .pfp {
+    width: 68px;
+    height: 68px;
+    flex-basis: 68px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .mail {
+    font-size: 10px;
+  }
+
+  .mail a {
+    font-size: 13px;
+  }
+}

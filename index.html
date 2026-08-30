@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hey! Asmit here</title>
+
+  <!-- Start downloading critical assets immediately -->
+  <link
+    rel="preload"
+    as="image"
+    href="./assets/pfp.jpeg"
+    fetchpriority="high"
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,500&display=swap">
+
+
+      <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <div class="page">
+
+    <div class="profile">
+
+      <div class="pfp">
+        <img
+          id="profileImage"
+          src="./assets/pfp.jpeg"
+          alt="Asmit Pranshu Singh"
+          fetchpriority="high"
+        >
+      </div>
+
+      <div class="identity">
+        <div class="pixel-name" id="pixelName"></div>
+        <div class="subtitle" id="randomLine"></div>
+      </div>
+
+    </div>
+
+    <div class="mail">
+      Drop me a hi! -
+      <a href="mailto:asmitx01@gmail.com">asmitx01@gmail.com</a>
+    </div>
+
+  </div>
+
+      <script src="script.js" defer></script>
+
+
+</body>
+</html>
