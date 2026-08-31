@@ -8,12 +8,9 @@ const lines = [
   "one of these days.",
   "have you tried refreshing the page?",
   "you wanna chat?",
-  "I was going to put something meaningful here.",
-  "this is still here.",
   "home sweet home.",
   "I use arch, btw.",
   "I miss when websites had weird little corners.",
-  "hello"
 ];
 
 const glyphs = {
